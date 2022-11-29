@@ -7,14 +7,17 @@ public class ClientStub : IClient
 {
     private readonly DateTime _now;
     private readonly IEnumerable<double> _sevenDaysTemps;
-
+    public Units? LastUnitSpy { get; set; }
     public ClientStub(DateTime now, IEnumerable<double> sevenDaysTemps)
     {
         _now = now;
         _sevenDaysTemps = sevenDaysTemps;
     }
+
+
     public Task<OneCallResponse> OneCallAsync(decimal latitude, decimal longitude, IEnumerable<Excludes> excludes, Units unit)
     {
+        LastUnitSpy = unit;
         const int DAYS = 7;
         OneCallResponse res = new OneCallResponse
         {
